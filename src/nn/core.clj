@@ -20,7 +20,7 @@
     ]
    [:body {:style "display: flex; justify-content: center; align-items: center; height: 100%; background: black; flex-flow: column;"}
     [:video {:autoplay "autoplay" :src "/nnphone.mp4"}]
-    [:span {:style "color: white"} "coming in terms eventual"]]))
+    [:span {:style "color: white"} "coming in terms eventual forever"]]))
 
 (defroutes nroutes
   (GET "/" [] (resp/response (main-page)))
