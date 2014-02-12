@@ -8,7 +8,6 @@
             [clojure.core.async :refer [chan <! >! put! close! go-loop go]]
             [org.httpkit.server :as http-kit]
             [ring.middleware.reload :as reload]
-            [ompostgres.db :as db]
             [hiccup.page :as html]
             [hiccup.element :as element]
             [ring.util.response :as resp]))
@@ -16,16 +15,18 @@
 (defn main-page []
   (html/html5
    [:head
-    [:title "depth in field"]]
-   [:body
-    [:video {:autoplay "autoplay" :src "/nnogg.ogg"}]]))
+    [:title "depth in field"]
+    [:style "html {height: 100%; width: 100%}"]
+    ]
+   [:body {:style "display: flex; justify-content: center; align-items: center; height: 100%; background: black; flex-flow: column;"}
+    [:video {:autoplay "autoplay" :src "/nnphone.mp4"}]
+    [:span {:style "color: white"} "coming in terms eventual"]]))
 
 (defroutes nroutes
   (GET "/" [] (resp/response (main-page)))
   (route/resources "/" {:root "public"}))
 
 (def app (-> nroutes wrap-edn-params reload/wrap-reload))
-
 
 (defn -main
   ([port]
