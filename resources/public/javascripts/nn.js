@@ -1,0 +1,12 @@
+goog.addDependency("base.js", ['goog'], []);
+goog.addDependency("../cljs/core.js", ['cljs.core'], ['goog.string', 'goog.array', 'goog.object', 'goog.string.StringBuffer']);
+goog.addDependency("../cljs_webgl/typed_arrays.js", ['cljs_webgl.typed_arrays'], ['cljs.core']);
+goog.addDependency("../cljs_webgl/constants.js", ['cljs_webgl.constants'], ['cljs.core']);
+goog.addDependency("../om/dom.js", ['om.dom'], ['cljs.core']);
+goog.addDependency("../om/core.js", ['om.core'], ['cljs.core', 'om.dom']);
+goog.addDependency("../cljs_webgl/shaders.js", ['cljs_webgl.shaders'], ['cljs.core']);
+goog.addDependency("../cljs_webgl/context.js", ['cljs_webgl.context'], ['cljs.core']);
+goog.addDependency("../cljs/core/match.js", ['cljs.core.match'], ['cljs.core']);
+goog.addDependency("../cljs_webgl/buffers.js", ['cljs_webgl.buffers'], ['cljs_webgl.typed_arrays', 'cljs.core', 'cljs_webgl.constants', 'cljs_webgl.shaders', 'cljs.core.match']);
+goog.addDependency("../cljs/reader.js", ['cljs.reader'], ['cljs.core', 'goog.string']);
+goog.addDependency("../nn/core.js", ['nn.core'], ['cljs_webgl.typed_arrays', 'cljs.core', 'cljs_webgl.constants', 'goog.events.EventType', 'goog.dom', 'om.core', 'cljs_webgl.shaders', 'cljs_webgl.context', 'cljs_webgl.buffers', 'om.dom', 'cljs.reader', 'goog.ui.IdGenerator', 'goog.net.XhrIo', 'goog.events']);
