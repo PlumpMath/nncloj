@@ -18,8 +18,24 @@
 
 
 
+
+(defn transform-matrix [rx, ry, rz]
+  (let [cx (Math/cos rx)
+        cy (Math/cos ry)
+        cz (Math/cos rz)
+        sx (Math/sin rx)
+        sy (Math/sin ry)
+        sz (Math/sin rz)]
+    [(* cy cz)  (- (*   sx sy cz) (* cx sz ))  (+ (*  sx sz) (*  cx sy cz))  0
+     (* cy sz) (+ (* sx sy sz) (* cx cz))  (- (*  cx sy sz) (*  sx cz))  0
+     (- sy)  (* sx cy) (* cx cy) 0 0 0 0 1]))
+
+
+
+
+
 (def triangle [
-                                                    0.0,  0.5,  0.0,
+                                                  0.0,  0.5,  0.0,
                                                     -0.5, -0.5,  0.0,
                                                     0.5, -0.5,  0.0
                                                     ])
@@ -35,9 +51,10 @@
 
 (def vertex-shader-source
   "attribute vec3 vertex_position;
-  uniform int thing;
-   void main() {
-     gl_Position = vec4(vertex_position, 1.0);
+  uniform mat4 thing;
+
+  void main() {
+     gl_Position = thing * vec4(vertex_position, 1.0);
    }")
 
 (def fragment-shader-source
@@ -81,7 +98,7 @@
                             :attrib-array (shaders/get-attrib-location gl
                                                                        shader
                                                                        "vertex_position")
-                            :mode constants/triangle-strip
+                            :mode constants/triangle-fan
                             :first 0 ;; what
                             :count 9 ;; huh
                             :components-per-vertex 3
@@ -91,14 +108,15 @@
                             :offset 0}
 
                            [{:name "frame" :type :int :values [frame]}
-                            {:name "thing" :type :int :values [thing]}]
+                            {:name "thing" :type :mat4 :values (transform-matrix 0 (if (= 0 (mod thing 2)) thing  0) 0)}]
 
                            {:buffer (element-buffer gl)
                             :count 9
                             :type constants/unsigned-short
                             :offset 0})
 
-            (.requestAnimationFrame js/window (fn [time-elapsed] (continue (inc frame) (mod (inc frame) 50) continue))))]
+
+   (.requestAnimationFrame js/window (fn [time-elapsed] (continue (inc frame) (mod (inc frame) 20) continue))))]
   (.requestAnimationFrame js/window (fn [time-elapsed] (draw 0 0 draw))))
 
 
