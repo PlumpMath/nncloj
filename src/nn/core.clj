@@ -14,25 +14,30 @@
             [ring.util.response :as resp]))
 
 (defn css-er []
-  (css [:html {:height "100%" :width "100%"}]
-       [:body {:display "flex"
-               :justify-content "center"
-               :align-items "center"
-               :height "100%"
-               :background "black"
-               :flex-flow "column"}
-        [:span {:color "white" :font-size "350%"}]
-        ]
-       ))
+  (let [full-size {:width "100%" :height "85%"} ]
+    (css [:html {:height "100%" :width "100%"}]
+         [:body {:display "flex"
+                 :justify-content "center"
+                 :align-items "center"
+                 :height "100%"
+                 :background "black"
+                 :flex-flow "column"}
+          [:span {:color "white" :font-size "350%"}]
+          [:canvas full-size]]
+         )))
 
 (defn main-page []
   (html/html5
    [:head
     [:title "depth in field"]
-    [:style (css-er)]]
+    [:style (css-er)]
+    ]
    [:body
-    [:video {:autoplay "autoplay" :src "/nnphone.mp4"}]
-    [:span {:style "color: white"} "coming in terms eventual forever"]]))
+    [:canvas#grid {:width "500" :height "500"}]
+    [:span "coming in terms eventual forever"]]
+   (html/include-js "/javascripts/nn.js")
+
+   ))
 
 (defn webgl-page []
   (html/html5
