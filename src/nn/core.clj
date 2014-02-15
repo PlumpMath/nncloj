@@ -14,7 +14,7 @@
             [ring.util.response :as resp]))
 
 (defn css-er []
-  (let [full-size {:width "100%" :height "85%"} ]
+  (let [full-size {:width "500px" :height "500px" :z-index "-42"} ]
     (css [:html {:height "100%" :width "100%"}]
          [:body {:display "flex"
                  :justify-content "center"
@@ -23,7 +23,7 @@
                  :background "black"
                  :flex-flow "column"}
           [:span {:color "white" :font-size "350%"}]
-          [:canvas full-size]]
+          [:canvas {:z-index "-99" :position "absolute" :top 0 :left "22%"}]]
          )))
 
 (defn main-page []
@@ -33,7 +33,7 @@
     [:style (css-er)]
     ]
    [:body
-    [:canvas#grid {:width "500" :height "500"}]
+    [:canvas#grid {:width "800" :height "800"}]
     [:span "coming in terms eventual forever"]]
    (html/include-js "/javascripts/nn.js")
 

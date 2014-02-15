@@ -16,8 +16,7 @@
 
 (enable-console-print!)
 
-
-
+(def cake (atom [0 0]))
 
 (defn transform-matrix [rx, ry, rz]
   (let [cx (Math/cos rx)
@@ -89,7 +88,7 @@
                                           constants/array-buffer
                                           constants/static-draw)
 
-     draw (fn [frame thing continue]
+     draw (fn [[frame thing] continue]
             (buffers/clear-color-buffer gl 0 0 0 1)
             (buffers/draw! gl
                            shader
@@ -108,7 +107,7 @@
                             :offset 0}
 
                            [{:name "frame" :type :int :values [frame]}
-                            {:name "thing" :type :mat4 :values (transform-matrix 0 (if (= 0 (mod thing 2)) thing  0) 0)}]
+                            {:name "thing" :type :mat4 :values (transform-matrix frame (if (= 0 (mod thing 2)) thing  0) 0)}]
 
                            {:buffer (element-buffer gl)
                             :count 9
@@ -116,8 +115,10 @@
                             :offset 0})
 
 
-   (.requestAnimationFrame js/window (fn [time-elapsed] (continue (inc frame) (mod (inc frame) 20) continue))))]
-  (.requestAnimationFrame js/window (fn [time-elapsed] (draw 0 0 draw))))
+            (.requestAnimationFrame js/window (fn [time-elapsed] (continue @cake continue))))]
+
+  (js/setInterval #(reset! cake [(inc (@cake 0)) (mod (inc (@cake 1)) 20)]) 100)
+  (draw @cake draw))
 
 
 
