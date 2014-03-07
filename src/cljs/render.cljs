@@ -8,8 +8,7 @@
             [cljs-webgl.constants :as constants]
             [cljs-webgl.buffers :as buffers]
             [cljs-webgl.typed-arrays :as ta]
-            [om.core :as om :include-macros true]
-            [om.dom :as dom :include-macros true])
+            [nn.utils.matrix :as matrix])
   (:import [goog.net XhrIo]
            goog.net.EventType
            [goog.events EventType]
@@ -17,18 +16,7 @@
 
 (def world (atom nil))
 
-(defn transform-matrix [rx, ry, rz]
-  (let [cx (Math/cos rx)
-        cy (Math/cos ry)
-        cz (Math/cos rz)
-        sx (Math/sin rx)
-        sy (Math/sin ry)
-        sz (Math/sin rz)]
-    [(* cy cz)  (- (*   sx sy cz) (* cx sz ))  (+ (*  sx sz)
-     (*  cx sy cz))  0 (* cy sz) (+ (* sx sy sz)
-     (* cx cz))  (- (*  cx sy sz) (*  sx cz))  0
-     (- sy)  (* sx cy) (* cx cy) 0
-     0 0 0 1]))
+
 
 
 (def triangle [0.0  0.5  0.0
@@ -49,7 +37,7 @@
   uniform mat4 thing;
 
   void main() {
-     gl_Position = thing * vec4(vertex_position, 1.0);
+     gl_Position = thing * vec4(vertex_position, 5.0);
    }")
 
 (def fragment-shader-source
@@ -80,10 +68,10 @@
 
 (defn draw [{:keys [name mode]}]
   (let [[frame thing] name
-        shape (case mode :tri constants/triangle-fan :strip constants/triangle-strip constants/line-loop)
+        shape (case mode :tri constants/triangles :strip constants/triangle-strip constants/line-loop)
         ] ;;such awful nomenclature johann
     (buffers/clear-color-buffer gl 0 0 0 1)
-    (print shape)
+
     (buffers/draw! gl
                    shader
                    {:buffer vertex-buffer
@@ -100,7 +88,7 @@
                     :offset 0}
 
                    [{:name "frame" :type :int :values [frame]}
-                    {:name "thing" :type :mat4 :values (transform-matrix frame (if (= 0 (mod thing 2)) thing  0) 0)}]
+                    {:name "thing" :type :mat4 :values (matrix/transform-matrix 0 frame #_(if (= 0 (mod thing 2)) thing  0) 0)}]
 
                    {:buffer (element-buffer gl)
                     :count 9

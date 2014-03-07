@@ -28,7 +28,7 @@
     (input/init-events! commands)
     (render/render-loop! notifos)
     (put! commands [:init])
-    (print "hey")
+
     ))
 
 (init)
