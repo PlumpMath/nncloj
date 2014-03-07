@@ -7,7 +7,7 @@
   [:head [:title title]
    [:meta {:name "viewport"
            :http-equiv "Content-type"
-           :content "width=device-width, initial-scale=1.0"}]
+           :content "width=device-width, user-scalable=no"}]
    [:style css]
    ]
   )
@@ -18,6 +18,7 @@
    (head-boiler "the new obvious" css)
    [:body.full
     [:div#menu.full]
+    (html/include-js "//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.11/fastclick.min.js")
     (html/include-js "http://fb.me/react-0.8.0.js")
     (html/include-js "/javascripts/menu/out/goog/base.js")
     (html/include-js "/javascripts/menu/menu.js")
