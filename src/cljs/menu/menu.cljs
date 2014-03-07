@@ -17,6 +17,8 @@
 
 (def app-state (atom {:e-films nil}))
 
+(js/React.initializeTouchEvents true)
+
 
 (def url "http://gdata.youtube.com/feeds/api/users/neurosisnow/uploads?max-results=4&v=2&alt=jsonc")
 (defn xhr [{:keys [method url on-complete on-error]}]
@@ -58,7 +60,6 @@
                   (dom/div #js {:onClick #(on-click owner root-chan id selected)
                                 :onMouseEnter #(on-hover owner root-chan (@thumbnail :hqDefault))
                                 :onMouseLeave #(on-hover owner root-chan)
-                                :onTap #(on-click owner root-chan id selected)
                                 :style (clj->js (if (= selected id) {:display "none"} {:padding "2px"}))
                                 :className (if hovered "title now-reading trans" "title trans")
                                 } title)
