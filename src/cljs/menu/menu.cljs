@@ -17,10 +17,6 @@
 
 (def app-state (atom {:e-films nil}))
 
-(defn e-films [ev]
-  (print "i ran, atleast")
-  (map #(select-keys % [:id :title :description :thumbnail])  (js->clj
-                                         (.. ev -target getResponseJson -data -items) :keywordize-keys true)))
 
 (def url "http://gdata.youtube.com/feeds/api/users/neurosisnow/uploads?max-results=4&v=2&alt=jsonc")
 (defn xhr [{:keys [method url on-complete on-error]}]
@@ -96,7 +92,7 @@
     om/IRenderState
     (render-state [_ {:keys [chans hovered vid-id]}]
                   (dom/div #js {:className "full flex mobile"}
-                           (dom/div #js {:className "half" :style #js {:background (if hovered
+                           (dom/div #js {:className "vid-frame" :style #js {:background (if hovered
                                                                                      (str "url(" hovered ")")
                                                                                      "#39FFEE"
                                                                                      )
@@ -108,7 +104,7 @@
                                     )
                            (apply dom/div #js {:className ""}
                                   (when vid-id
-                                    (let [e-film  (into {} (filter #(= (% :id) vid-id) (@app-state :e-films)))]
+                                    (let [e-film  (into {} (filter #(= (% :id) vid-id) (app :e-films)))]
                                       (dom/h4 #js {:className "title"
                                                    :onClick #(put! (chans :root-chan) [:clicked nil])} (e-film :title))))
                                   (if-not e-films

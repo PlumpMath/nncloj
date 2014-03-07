@@ -16,19 +16,25 @@
     {
      :display "-webkit-flex"
      :align-items align
+     :-webkit-align-items align
      :justify-content justify
+     :-webkit-justify-content justify
      :flex-flow flow})
   ([align flow]
     {
      :align-items align
+     :-webkit-align-items align
      :display "-webkit-flex"
      :justify-content align
+     :-webkit-justify-content align
      :flex-flow flow})
   ([align]
    {
      :align-items align
+     :-webkit-align-items align
      :display "-webkit-flex"
      :justify-content align
+     :-webkit-justify-content align
     }
    ))
 
@@ -40,13 +46,15 @@
                       [:.flex ^:prefix (flex-box "center")]
                       [:.column ^:prefix {:flex-flow "column"}]
                       [:.full (size "100%")]
-                      [:.half (size "50%")]
-                      [:.topics (size "100%" "20%")]
-                      (ss/at-media {:min-width "320px" :max-width "480px"}
-                                   [:.topics {:display "none"}])
+                      [:.vid-frame (size "50%")]
+                    (ss/at-media {:min-width "320px"  :max-width "480px"}
+                                 [:.vid-frame (size "50%" "100%")])
+
 
                     (ss/at-media {:min-width "320px"  :max-width "480px"}
-                                 [:.mobile {:flex-flow "column"}])
+                                 [:.mobile ^:prefix {:flex-flow "column"
+                                                     :width "100%"
+                                                     :height "100%"}])
                       [:.baseline ^:prefix {:align-items "baseline"}]
                       [:.start ^:prefix {:align-self "flex-start"}
                        ]
