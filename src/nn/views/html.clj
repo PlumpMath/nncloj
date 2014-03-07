@@ -25,6 +25,6 @@
    [:body.full
     [:div#menu.full]
     (html/include-js "http://fb.me/react-0.8.0.js")
-    (html/include-js "/javascripts/menu/out/goog/base.js")
+    #_(html/include-js "/javascripts/menu/out/goog/base.js")
     (html/include-js "/javascripts/menu/menu.js")
-    (element/javascript-tag "goog.require('nn.menu')")]))
+    #_(element/javascript-tag "goog.require('nn.menu')")]))

@@ -49,7 +49,7 @@
             :source-paths ["src/cljs/menu"]
             :compiler {
               :output-to "resources/public/javascripts/menu/menu.js"
-              :optimizations :advanced
+              :optimizations :simple
               :pretty-print false
               :externs ["react/externs/react.js"]}}
 
