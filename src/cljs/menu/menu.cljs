@@ -58,12 +58,14 @@
   (reify
     om/IRenderState
     (render-state [_ {:keys [root-chan hovered selected]}]
-                  (dom/div #js {:onClick #(on-click owner root-chan id selected)
+                  (dom/div #js {
                                 :onMouseEnter #(on-hover owner root-chan (@thumbnail :hqDefault))
                                 :onMouseLeave #(on-hover owner root-chan)
                                 :style (clj->js (if (= selected id) {:display "none"} {:padding "2px"}))
                                 :className (if hovered "title now-reading trans" "title trans")
                                 }
+                           (dom/button #js {:onClick #(on-click owner root-chan id selected)}
+                                       "")
                            title)
 
 
@@ -110,7 +112,10 @@
                                   (when vid-id
                                     (let [e-film  (into {} (filter #(= (% :id) vid-id) (app :e-films)))]
                                       (dom/h4 #js {:className "title"
-                                                   :onClick #(put! (chans :root-chan) [:clicked nil])} (e-film :title))))
+                                                   }
+                                              (dom/button #js {:onClick #(put! (chans :root-chan) [:clicked nil])}
+                                                          "")
+                                              (e-film :title))))
                                   (if-not e-films
                                     "loading"
                                     (om/build-all e-film e-films {:init-state chans
