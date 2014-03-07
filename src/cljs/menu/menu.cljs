@@ -40,13 +40,7 @@
     (om/set-state! owner :selected (not selected))
   (put! chan [:clicked id]))
 
-(defn xor
-  [p q]
-  (cond
-   (and p (nil? hovered)) true
-   (and p (not (= id hovered))) false
-   (or p q) true
-   ))
+
 
 (defn e-film [{:keys [id title thumbnail description]} owner]
   (reify
