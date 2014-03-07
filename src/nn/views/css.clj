@@ -44,6 +44,9 @@
                       [:.topics (size "100%" "20%")]
                       (ss/at-media {:min-width "320px" :max-width "480px"}
                                    [:.topics {:display "none"}])
+
+                    (ss/at-media {:min-width "320px"  :max-width "480px"}
+                                 [:.mobile {:flex-flow "column"}])
                       [:.baseline ^:prefix {:align-items "baseline"}]
                       [:.start ^:prefix {:align-self "flex-start"}
                        ]

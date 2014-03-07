@@ -95,7 +95,7 @@
 
     om/IRenderState
     (render-state [_ {:keys [chans hovered vid-id]}]
-                  (dom/div #js {:className "full flex"}
+                  (dom/div #js {:className "full flex mobile"}
                            (dom/div #js {:className "half" :style #js {:background (if hovered
                                                                                      (str "url(" hovered ")")
                                                                                      "#39FFEE"
