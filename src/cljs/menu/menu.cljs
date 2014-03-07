@@ -60,6 +60,7 @@
                   (dom/div #js {:onClick #(on-click owner root-chan id selected)
                                 :onMouseEnter #(on-hover owner root-chan (@thumbnail :hqDefault))
                                 :onMouseLeave #(on-hover owner root-chan)
+                                :onTouchStart #(on-click owner root-chan id selected)
                                 :style (clj->js (if (= selected id) {:display "none"} {:padding "2px"}))
                                 :className (if hovered "title now-reading trans" "title trans")
                                 } title)
