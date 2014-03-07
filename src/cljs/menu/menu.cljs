@@ -61,11 +61,10 @@
                   (dom/div #js {:onClick #(on-click owner root-chan id selected)
                                 :onMouseEnter #(on-hover owner root-chan (@thumbnail :hqDefault))
                                 :onMouseLeave #(on-hover owner root-chan)
-                                :onTouchStart #(on-hover owner root-chan (@thumbnail :hqDefault))
-                                :onTouchEnd #(on-hover owner root-chan)
                                 :style (clj->js (if (= selected id) {:display "none"} {:padding "2px"}))
                                 :className (if hovered "title now-reading trans" "title trans")
-                                } title)
+                                }
+                           title)
 
 
                   )))
