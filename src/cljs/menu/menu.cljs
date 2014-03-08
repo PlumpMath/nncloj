@@ -61,8 +61,8 @@
   (reify
     om/IWillUpdate
     (will-update [_ next-props next-state]
-
-
+                 (print (debug/expose next-props))
+                 (print (debug/expose next-state))
                  )
     om/IRenderState
     (render-state [_ {:keys [root-chan hovered selected]}]
