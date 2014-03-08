@@ -54,6 +54,8 @@
 
                     [(keyword "input[type='range']")
                      {:-webkit-appearance "none !important"
+                      :padding "5px"
+                      :margin "5px"
                       :background-color "#FF0DFF"
                       :outline "none"}
                      ]
@@ -61,7 +63,8 @@
                     [(keyword "input[type='range']::-webkit-slider-thumb")
                      {:-webkit-appearance "none !important"
                       :border-radius "10px"
-                      :background-color "white"
+                      :background-color "#FFF"
+                      :background-image "-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#39FFE))"
                       :height "44px"
                       :width "44px"}
                      ]
