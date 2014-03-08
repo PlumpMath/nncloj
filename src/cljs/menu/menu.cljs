@@ -25,8 +25,9 @@
   (let [xhr (XhrIo.)]
     (events/listen xhr goog.net.EventType.SUCCESS
       (fn [e]
-        (on-complete (into [] (map #(select-keys % [:id :title :description :thumbnail])
-                                (js->clj (.. xhr getResponseJson -data -items) :keywordize-keys true))))))
+        (on-complete (into [] (map-indexed #(conj {:nid %1} %2)
+                           (map #(select-keys % [:id :title :description :thumbnail])
+                                (js->clj (.. xhr getResponseJson -data -items) :keywordize-keys true)))))))
     (events/listen xhr goog.net.EventType.ERROR
 
       (fn [e]
@@ -51,8 +52,10 @@
     (om/set-state! owner :selected (not selected))
   (put! chan [:clicked id]))
 
-;;removes click delay on non-chrome web-browsers
-
+(defn range-change [owner chan app]
+  (let [val (.-value (om/get-node owner "range"))
+        id (:id (into {} (filter #(= (str (% :nid)) val) @app)))]
+    (put! chan [:clicked id])))
 
 (defn e-film [{:keys [id title thumbnail description]} owner]
   (reify
@@ -67,6 +70,18 @@
                                 }
                            title)
 
+
+                  )))
+
+(defn mobile-scroll [app owner]
+  (reify
+    om/IRenderState
+    (render-state [_ {:keys [root-chan selected]}]
+                  (let [val-map (into {} (filter #(= (% :id) selected) app))
+                        val (str (val-map :nid))]
+                    (dom/input #js {:className "scroller"
+                                    :type "range" :min "0" :max (str (- (count app) 1)) :ref "range" :onChange #(range-change owner root-chan app)
+                                    :value (if (= val "") "0" val)} nil))
 
                   )))
 
@@ -116,6 +131,8 @@
                                               (dom/button #js {:onClick #(put! (chans :root-chan) [:clicked nil])}
                                                           "")
                                               (e-film :title))))
+                                  (om/build mobile-scroll e-films {:init-state chans
+                                                                   :state {:selected vid-id}})
                                   (if-not e-films
                                     "loading"
                                     (om/build-all e-film e-films {:init-state chans

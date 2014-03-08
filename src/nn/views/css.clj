@@ -50,11 +50,13 @@
                     (ss/at-media {:min-width "320px"  :max-width "480px"}
                                  [:.vid-frame (size "50%" "100%")])
 
+                    [:.scroller {:display "none"}]
 
                     (ss/at-media {:min-width "320px"  :max-width "480px"}
                                  [:.mobile ^:prefix {:flex-flow "column"
                                                      :width "100%"
-                                                     :height "100%"}])
+                                                     :height "100%"}]
+                                 [:.scroller {:display "block"}])
                       [:.baseline ^:prefix {:align-items "baseline"}]
                       [:.start ^:prefix {:align-self "flex-start"}
                        ]
