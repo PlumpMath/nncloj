@@ -48,17 +48,22 @@
     (put! chan [:hovered nil])))
 
 (defn on-click
-  [owner chan id selected]
+  [owner chan nid selected]
     (om/set-state! owner :selected (not selected))
-  (put! chan [:clicked id]))
+  (put! chan [:clicked nid]))
 
 (defn range-change [owner chan app]
   (let [val (.-value (om/get-node owner "range"))
         id (:id (into {} (filter #(= (str (% :nid)) val) @app)))]
-    (put! chan [:clicked id])))
+    (put! chan [:clicked  (js/parseInt val)])))
 
-(defn e-film [{:keys [id title thumbnail description]} owner]
+(defn e-film [{:keys [nid id title thumbnail description]} owner]
   (reify
+    om/IWillUpdate
+    (will-update [_ next-props next-state]
+                 (print "next-props: " next-props)
+                 (print "next-state: " next-state)
+                 )
     om/IRenderState
     (render-state [_ {:keys [root-chan hovered selected]}]
                   (dom/div #js {
@@ -66,7 +71,7 @@
                                 :onMouseLeave #(on-hover owner root-chan)
                                 :style (clj->js (if (= selected id) {:display "none"} {:padding "2px"}))
                                 :className (if hovered "title now-reading trans" "title trans")
-                                :onClick #(on-click owner root-chan id selected)
+                                :onClick #(on-click owner root-chan nid selected)
                                 }
                            title)
 
@@ -81,9 +86,19 @@
                         val (str (val-map :nid))]
                     (dom/input #js {:className "flex scroller"
                                     :type "range" :min "0" :max (str (- (count app) 1)) :ref "range" :onChange #(range-change owner root-chan app)
-                                    :value (if (= val "") "0" val)} nil))
+                                    :value (if (= (str selected) "") "0" selected)} nil))
 
                   )))
+
+(defn iframe [{:keys [nid id]} owner]
+  (reify
+    om/IRenderState
+    (render-state [_ {:keys [root-chan selected]}]
+                  (dom/iframe #js {:src (str "//www.youtube.com/embed/" id)
+                                   :className "full"
+                                   :frameBorder "0"
+                                   :style (clj->js (if (= selected nid) {} {:display "none"}))}
+                                                  ""))))
 
 
 
@@ -105,40 +120,39 @@
                                     (let [[key val] (<! root-chan)]
                                       (case key
                                        :hovered (om/set-state! owner :hovered val)
-                                       :clicked (om/set-state! owner :vid-id val)
+                                       :clicked (om/set-state! owner :selected val)
                                    ))))))
     om/IDidMount
       (did-mount [this] )
 
     om/IRenderState
-    (render-state [_ {:keys [chans hovered vid-id]}]
+    (render-state [_ {:keys [chans hovered selected]}]
                   (dom/div #js {:className "full flex mobile"}
-                           (dom/div #js {:className "vid-frame" :style #js {:background (if hovered
+                           (apply dom/div #js {:className "vid-frame" :style #js {:background (if hovered
                                                                                      (str "url(" hovered ")")
                                                                                      "#39FFEE"
                                                                                      )
                                                                        }}
-                                    (when vid-id
-                                      (dom/iframe #js {:src (str "//www.youtube.com/embed/" vid-id) :className "full" :frameBorder "0"}
-                                                  "")
-                                      )
-                                    )
+
+                                    (om/build-all iframe e-films {:init-state chans
+                                                                  :state {
+                                                                          :selected selected
+                                                                          }}))
                            (om/build mobile-scroll e-films {:init-state chans
-                                                                   :state {:selected vid-id}})
+                                                                   :state {:selected selected}})
                            (apply dom/div #js {:className ""}
-                                  (when vid-id
-                                    (let [e-film  (into {} (filter #(= (% :id) vid-id) (app :e-films)))]
+                                  (when selected
+                                    (let [e-film  (into {} (filter #(= (% :nid) selected) (app :e-films)))]
                                       (dom/h4 #js {:className "title"
+                                                   :onClick #(put! (chans :root-chan) [:clicked nil])
                                                    }
-                                              (dom/button #js {:onClick #(put! (chans :root-chan) [:clicked nil])}
-                                                          "")
                                               (e-film :title))))
 
                                   (if-not e-films
                                     "loading"
                                     (om/build-all e-film e-films {:init-state chans
                                                                   :state {
-                                                                          :selected vid-id
+                                                                          :selected selected
                                                                           }})
                                     )
 
