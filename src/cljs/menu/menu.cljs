@@ -52,9 +52,7 @@
   (put! chan [:clicked id]))
 
 ;;removes click delay on non-chrome web-browsers
-#_(.addEventListener js/window "load" (fn []
-                                      (print "hey")
-                                      (.attach js/FastClick (.-body js/document))))
+
 
 (defn e-film [{:keys [id title thumbnail description]} owner]
   (reify
@@ -65,9 +63,8 @@
                                 :onMouseLeave #(on-hover owner root-chan)
                                 :style (clj->js (if (= selected id) {:display "none"} {:padding "2px"}))
                                 :className (if hovered "title now-reading trans" "title trans")
+                                :onClick #(on-click owner root-chan id selected)
                                 }
-                           (dom/button #js {:onClick #(on-click owner root-chan id selected)}
-                                       "")
                            title)
 
 
