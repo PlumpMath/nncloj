@@ -52,7 +52,7 @@
   (put! chan [:clicked id]))
 
 ;;removes click delay on non-chrome web-browsers
-(.addEventListener js/window "load" (fn [] (.attach js/FastClick (.-body js/document))))
+#_(.addEventListener js/window "load" (fn [] (.attach js/FastClick (.-body js/document))))
 
 (defn e-film [{:keys [id title thumbnail description]} owner]
   (reify
