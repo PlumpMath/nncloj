@@ -52,11 +52,26 @@
 
                     [:.scroller {:display "none"}]
 
+                    [(keyword "input[type='range']")
+                     {:-webkit-appearance "none !important"
+                      :background-color "#FF0DFF"
+                      :outline "none"}
+                     ]
+
+                    [(keyword "input[type='range']::-webkit-slider-thumb")
+                     {:-webkit-appearance "none !important"
+                      :border-radius "10px"
+                      :background-color "white"
+                      :height "44px"
+                      :width "44px"}
+                     ]
+
                     (ss/at-media {:min-width "320px"  :max-width "480px"}
                                  [:.mobile ^:prefix {:flex-flow "column"
                                                      :width "100%"
                                                      :height "100%"}]
-                                 [:.scroller {:display "block"}])
+                                 [:.scroller {:display "block"
+                                              }])
                       [:.baseline ^:prefix {:align-items "baseline"}]
                       [:.start ^:prefix {:align-self "flex-start"}
                        ]
