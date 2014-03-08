@@ -55,7 +55,7 @@
                     [(keyword "input[type='range']")
                      {:-webkit-appearance "none !important"
                       :padding "5px"
-                      :margin "5px"
+                      :margin-top "5px"
                       :background-color "#FF0DFF"
                       :outline "none"}
                      ]
@@ -74,6 +74,7 @@
                                                      :width "100%"
                                                      :height "100%"}]
                                  [:.scroller {:display "block"
+                                              :width "94%"
                                               }])
                       [:.baseline ^:prefix {:align-items "baseline"}]
                       [:.start ^:prefix {:align-self "flex-start"}

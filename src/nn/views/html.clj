@@ -7,7 +7,7 @@
   [:head [:title title]
    [:meta {:name "viewport"
            :http-equiv "Content-type"
-           :content "width=device-width, user-scalable=no"}]
+           :content "width=device-width, initial-scale=1.0"}]
    [:style css]
    ]
   )
