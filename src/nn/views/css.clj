@@ -97,7 +97,7 @@
                       [:body  {:background "white" :margin 0}
                        [:.bookend (conj {:background "#5978FF" } (size "100%" "25%"))]
                        ]
-                    [:.iframe {:margin-bottom "2px"}]
+                    [:.iframe {:margin-bottom "6px"}]
                       [:.overflow {:overflow-y "scroll"}]
                       [:.test ^:prefix {:transform "translateY(5em)"}]
                       [:.trans {:transition "all .1s ease-in-out"}]
