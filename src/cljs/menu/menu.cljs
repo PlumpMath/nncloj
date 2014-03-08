@@ -69,7 +69,7 @@
                   (dom/div #js {
                                 :onMouseEnter #(on-hover owner root-chan (@thumbnail :hqDefault))
                                 :onMouseLeave #(on-hover owner root-chan)
-                                :style (clj->js (if (= selected id) {:display "none"} {:padding "0px"}))
+                                :style (clj->js (if (= selected nid) {:display "none"} {:padding "0px"}))
                                 :className (if hovered "title now-reading trans" "title trans")
                                 :onClick #(on-click owner root-chan nid selected)
                                 }
