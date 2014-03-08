@@ -143,7 +143,7 @@
                            (apply dom/div #js {:className ""}
                                   (when selected
                                     (let [e-film  (into {} (filter #(= (% :nid) selected) (app :e-films)))]
-                                      (dom/h4 #js {:className "title"
+                                      (dom/i #js {:className "title"
                                                    :onClick #(put! (chans :root-chan) [:clicked nil])
                                                    }
                                               (e-film :title))))
