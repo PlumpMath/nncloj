@@ -79,7 +79,7 @@
     (render-state [_ {:keys [root-chan selected]}]
                   (let [val-map (into {} (filter #(= (% :id) selected) app))
                         val (str (val-map :nid))]
-                    (dom/input #js {:className "scroller"
+                    (dom/input #js {:className "flex scroller"
                                     :type "range" :min "0" :max (str (- (count app) 1)) :ref "range" :onChange #(range-change owner root-chan app)
                                     :value (if (= val "") "0" val)} nil))
 
@@ -123,6 +123,8 @@
                                                   "")
                                       )
                                     )
+                           (om/build mobile-scroll e-films {:init-state chans
+                                                                   :state {:selected vid-id}})
                            (apply dom/div #js {:className ""}
                                   (when vid-id
                                     (let [e-film  (into {} (filter #(= (% :id) vid-id) (app :e-films)))]
@@ -131,8 +133,7 @@
                                               (dom/button #js {:onClick #(put! (chans :root-chan) [:clicked nil])}
                                                           "")
                                               (e-film :title))))
-                                  (om/build mobile-scroll e-films {:init-state chans
-                                                                   :state {:selected vid-id}})
+
                                   (if-not e-films
                                     "loading"
                                     (om/build-all e-film e-films {:init-state chans
