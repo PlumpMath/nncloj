@@ -88,7 +88,7 @@
                                 }
                        ]
                       [:.now-reading ^:prefix {:background "#FF0DFF"
-                                               :transform "scale(1.08) translateX(4%)"
+                                               :transform "scale(1.04)"
                                                :border "solid .5px black"
                                                :color "white"
 

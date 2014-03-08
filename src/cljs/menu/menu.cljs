@@ -61,15 +61,15 @@
   (reify
     om/IWillUpdate
     (will-update [_ next-props next-state]
-                 (print "next-props: " next-props)
-                 (print "next-state: " next-state)
+
+
                  )
     om/IRenderState
     (render-state [_ {:keys [root-chan hovered selected]}]
                   (dom/div #js {
                                 :onMouseEnter #(on-hover owner root-chan (@thumbnail :hqDefault))
                                 :onMouseLeave #(on-hover owner root-chan)
-                                :style (clj->js (if (= selected id) {:display "none"} {:padding "2px"}))
+                                :style (clj->js (if (= selected id) {:display "none"} {:padding "0px"}))
                                 :className (if hovered "title now-reading trans" "title trans")
                                 :onClick #(on-click owner root-chan nid selected)
                                 }
