@@ -15,10 +15,15 @@
 
 (defn experiment-page [css]
   (html/html5
-   (head-boiler "the new obvious" css)
+   (conj (head-boiler "the new obvious" css)
+         (html/include-js "//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.11/fastclick.min.js")
+         (element/javascript-tag "window.addEventListener('load', function() {
+                                 FastClick.attach(document.body);
+                                 }, false);"))
    [:body.full
     [:div#menu.full]
-    (html/include-js "//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.11/fastclick.min.js")
+
+
     (html/include-js "http://fb.me/react-0.8.0.js")
     (html/include-js "/javascripts/menu/out/goog/base.js")
     (html/include-js "/javascripts/menu/menu.js")

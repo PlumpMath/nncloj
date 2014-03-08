@@ -51,6 +51,11 @@
     (om/set-state! owner :selected (not selected))
   (put! chan [:clicked id]))
 
+;;removes click delay on non-chrome web-browsers
+#_(.addEventListener js/window "load" (fn []
+                                      (print "hey")
+                                      (.attach js/FastClick (.-body js/document))))
+
 (defn e-film [{:keys [id title thumbnail description]} owner]
   (reify
     om/IRenderState
@@ -81,7 +86,7 @@
             })
     om/IWillMount
                 (will-mount [_]
-                            (.attach js/FastClick (gdom/getElement "menu"))
+
                             (xhr {:method "GET" :url url :on-complete #(om/transact! app :e-films (fn [_] %)) :on-error #(print %)})
                             (let [root-chan (om/get-state owner [:chans :root-chan])]
                               (go (while true
