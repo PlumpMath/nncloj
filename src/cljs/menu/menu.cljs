@@ -36,7 +36,11 @@
       (send url method
         ;;#js {"Content-Type" "application/edn" "Accept" "application/edn"}
             ))))
+(defn rgb [r g b]
+  (str "rgb(" r "," g "," b  ")" ))
 
+(defn hsl [h s l]
+  (str "hsl(" h "," s "%," l  "%)" ))
 
 
 (defn on-hover
@@ -46,6 +50,12 @@
   ([owner chan]
     (om/set-state! owner :hovered nil)
     (put! chan [:hovered nil])))
+
+(def shades [[255 145 121] ;;pick better shades or do color generation
+             [204 31 25]
+             [95 127 153]
+             [25 124 204]
+             ])
 
 (defn on-click
   [owner chan nid selected]
@@ -59,11 +69,25 @@
 
 (defn e-film [{:keys [nid id title thumbnail description]} owner]
   (reify
+    om/IDidUpdate
+    (did-update [this prev-props prev-state]
+               (print (om/get-shared owner))
+                (when (or (om/get-state owner :hovered)
+                          (om/get-state owner :clicked))
+                 (let [
+                         h (mod 360 (+ 175 (* 60 (rand-int 3))))
+                          hsl (hsl h 100 61)
+                          ]
+                     #_(set! (.. js/document -body -style -backgroundColor) hsl)
+
+                     (put! (prev-state :root-chan) [:color hsl])
+
+                   )
+                 )
+               )
     om/IWillUpdate
     (will-update [_ next-props next-state]
-                 (print (debug/expose next-props))
-                 (print (debug/expose next-state))
-                 )
+                 #_(print (om/get-render-state owner)))
     om/IRenderState
     (render-state [_ {:keys [root-chan hovered selected]}]
                   (dom/div #js {
@@ -102,7 +126,7 @@
 
 
 
-(defn app-view [{:keys [e-films] :as app} owner]
+(defn video-widget [{:keys [e-films] :as app} owner]
   (reify
     om/IInitState
     (init-state [_]
@@ -121,16 +145,18 @@
                                       (case key
                                        :hovered (om/set-state! owner :hovered val)
                                        :clicked (om/set-state! owner :selected val)
+                                       :color (om/set-state! owner :color val)
                                    ))))))
     om/IDidMount
       (did-mount [this] )
 
     om/IRenderState
-    (render-state [_ {:keys [chans hovered selected]}]
+    (render-state [_ {:keys [chans hovered selected color]}]
                   (dom/div #js {:className "full flex mobile"}
                            (apply dom/div #js {:className "vid-frame" :style #js {:background (if hovered
                                                                                      (str "url(" hovered ")")
-                                                                                     "#39FFEE"
+                                                                                     (or color (hsl 175 100 61))
+
                                                                                      )
                                                                        }}
 
@@ -140,7 +166,8 @@
                                                                           }}))
                            (om/build mobile-scroll e-films {:init-state chans
                                                                    :state {:selected selected}})
-                           (apply dom/div #js {:className ""}
+                           (apply dom/div #js {:className ""
+                                               :style #js {:padding-left "10px"}}
                                   (when selected
                                     (let [e-film  (into {} (filter #(= (% :nid) selected) (app :e-films)))]
                                       (dom/i #js {:className "title"
@@ -165,10 +192,30 @@
 
 
 (om/root
- app-view
+ video-widget
  app-state
  {:target (gdom/getElement "menu")
   :tx-listen (fn [tx-data root-cursor]
      (println tx-data))
   }
  )
+
+(defn svg [app owner]
+  (reify
+    om/IRenderState
+    (render-state [_ state]
+                  (dom/svg nil
+                   (dom/rect #js {:x 10
+                                  :y 10
+                                  :height 100
+                                  :width 100
+                                  :style #js {:stroke "red"
+                                              :fill "black"}} nil)
+
+                           )
+                  )))
+
+(om/root
+ svg
+ app-state
+ {:target (gdom/getElement "svg")})

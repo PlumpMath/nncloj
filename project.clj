@@ -8,7 +8,7 @@
                  [org.clojure/clojurescript "0.0-2173" :scope "provided"]
                  [org.clojure/core.async "0.1.267.0-0d7780-alpha"]
                  [om-sync "0.1.1"]
-                 [om "0.5.1"]
+                 [om "0.5.2"]
                  [http-kit "2.1.13"]
                  [hiccup "1.0.5"]
                  [compojure "1.1.6"]

@@ -22,6 +22,7 @@
                                  }, false);"))
    [:body.full
     [:div#menu.full]
+    [:div#svg]
 
 
     (html/include-js "http://fb.me/react-0.8.0.js")
