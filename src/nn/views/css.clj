@@ -93,6 +93,7 @@
                                                :color "white"
 
                                                }]
+                    [:.work ^:prefix {:transform "scale(2)"}]
                       [:.fixed {:position "fixed"}]
                       [:body  {:background "white" :margin 0}
                        [:.bookend (conj {:background "#5978FF" } (size "100%" "25%"))]
