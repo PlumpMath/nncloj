@@ -56,17 +56,22 @@
                                                                }))}
                            (om/build au/about-us app))
                            (dom/div #js {:className (if selected
-                                                      "z-index flex panel column"
+                                                      "z-index flex panel"
                                                       "z-index flex panel")
                                          :style (clj->js  {:position "absolute"
                                                            :bottom "5%"
+                                                           :right "1%"
+                                                           ;;:width "8%"
+                                                           ;;:height "8%"
+                                                           ;;:background "#DCE5E4"
 
                                                           }
                                                          ) }
-                                    (dom/div #js {:className "item"
+                                    (when-not selected (dom/span #js {:className "fa fa-long-arrow-right"} nil))
+                                    (dom/div #js {:className "full flex item"
                                                   :onClick #(om/update-state! owner :selected not)} (if selected "e-films " "about us ")
 
-                                             (dom/span #js {:className (if selected "fa fa-long-arrow-left" "fa fa-long-arrow-right")} nil))
+                                             (when selected (dom/span #js {:className "fa fa-long-arrow-left"} nil)))
 
                                     )
 
