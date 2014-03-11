@@ -1,13 +1,14 @@
-(ns nn.core
+(ns nn.nn
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
   (:require [cljs.reader :as reader]
             [goog.events :as events]
             [goog.dom :as gdom]
-            [nn.utils.input :as input]
+            ;;[nn.utils.input :as input]
             [cljs.core.async :as async :refer [chan put! pipe unique merge map< filter< alts! <!]]
-
-            [nn.render :as render]
-            [nn.game-logic :as game]
+            [nn.aboutus.aboutus :as au]
+            [nn.vidwid.vidwid :as vw]
+            ;;[nn.render :as render]
+            ;;[nn.game-logic :as game]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true])
   (:import [goog.net XhrIo]
@@ -16,10 +17,91 @@
            ))
 
 (enable-console-print!)
+(def app-state (atom {:about-us "kaitlin trataris and johann bestowrous are humans on earth." :e-films nil}))
+
+(defn main [app owner]
+  (reify
+    om/IRenderState
+    (render-state [_ {:keys [selected]}]
+                  (dom/div #js {:className "full"
+                                :style #js {:overflow "hidden"
+                                            :position "relative"
+                                            :-webkit-transform-style "preserve-3d"
+                                            :-webkit-transform "translateZ(0)"}}
+
+                           (dom/div #js {:className "panel full"
+                                         :style (clj->js (if selected
+                                                          {:-webkit-transform-style "preserve-3d"
+                                                               :position "absolute"
+                                                               :-webkit-transform "translate3d(-100%, 0, 0)"
+
+                                                               }
+                                                           {:-webkit-transform-style "preserve-3d"
+                                                               :position "absolute"
+                                                               :-webkit-transform "translate3d(0, 0, 0)"
+
+                                                               }))}
+                            (om/build vw/video-widget app))
+                           (dom/div #js {:className "panel full"
+                                        :style (clj->js (if selected
+                                                          {:-webkit-transform-style "preserve-3d"
+                                                               :position "absolute"
+                                                               :-webkit-transform "translate3d(0, 0, 0)"
+
+                                                               }
+                                                           {:-webkit-transform-style "preserve-3d"
+                                                               :position "absolute"
+                                                               :-webkit-transform "translate3d(100%, 0, 0)"
+
+                                                               }))}
+                           (om/build au/about-us app))
+                           (dom/div #js {:className (if selected
+                                                      "z-index flex panel column"
+                                                      "z-index flex panel")
+                                         :style (clj->js  {:position "absolute"
+                                                           :bottom "5%"
+
+                                                          }
+                                                         ) }
+                                    (dom/div #js {:className "item"
+                                                  :onClick #(om/update-state! owner :selected not)} (if selected "e-films" "about us"))
+
+                                    )
+
+
+                           )
+                  )))
+
+(om/root
+ main
+ app-state
+ {:target (gdom/getElement "svg")})
 
 
 
-(defn init
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#_(defn init
   "Initialize the UI by initializing the user input, adapting the canvas
   and starting the render loop."
   []
@@ -31,7 +113,7 @@
 
     ))
 
-(init)
+#_(init)
 
 
 

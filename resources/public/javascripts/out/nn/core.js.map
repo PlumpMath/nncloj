@@ -1,0 +1,6 @@
+{"version":3,
+ "file":"/Users/jmsb/nn/resources/public/javascripts/out/nn/core.js",
+ "sources":["nn.cljs"],
+ "lineCount":31,
+ "mappings":";AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;AAkBA,AAACA",
+ "names":["cljs.core/enable-console-print!"]}

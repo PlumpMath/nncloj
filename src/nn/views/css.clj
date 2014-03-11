@@ -41,16 +41,35 @@
 (def xp (garden/css {:vendors ["webkit" "moz" "o" "ms"]}
 
 
-                      [:html (size "100%")]
-                      [:.selected {:color "white"}]
-                      [:.flex ^:prefix (flex-box "center")]
-                      [:.column ^:prefix {:flex-flow "column"}]
-                      [:.full (size "100%")]
-                      [:.vid-frame (size "50%")]
+                    [:html (merge {:font-family "arial"} (size "100%"))]
+                    [:.z-index {:z-index "99"}]
+                    [:.selected {:color "white"}]
+                    [:.flex ^:prefix (flex-box "center")]
+                    [:.column ^:prefix {:flex-flow "column"}]
+                    [:.full (size "100%")]
+                    [:#svg ^:prefix {:perspective "1100px"
+                                     :position "relative"
+                                     }]
+                    [:.vid-frame (size "50%")]
                     (ss/at-media {:min-width "320px"  :max-width "480px"}
                                  [:.vid-frame (size "50%" "100%")])
 
+                    [:.aboutus-frame (size "100%" "50%")]
+                    (ss/at-media {:min-width "320px"  :max-width "480px"}
+                                 [:.aboutus-frame (size "50%" "50%")])
+
+                    (ss/at-media {:min-width "320px"  :max-width "480px"}
+                                 [:.un-mobile {:display "none"}])
+
                     [:.scroller {:display "none"}]
+
+                    [:.item {:padding-left "2px"}
+                     [:&:hover ^:prefix {:background "#FF0DFF"
+                                         :transform "scale(1.04)"
+                                         :border "solid .5px black"
+                                         :color "white"
+                                         }
+                      ]]
 
                     [(keyword "input[type='range']")
                      {:-webkit-appearance "none !important"
@@ -76,40 +95,43 @@
                                  [:.scroller {:display "block"
                                               :width "94%"
                                               }])
-                      [:.baseline ^:prefix {:align-items "baseline"}]
-                      [:.start ^:prefix {:align-self "flex-start"}
-                       ]
-                      [:.title {:width "100%"
-                                :height "100%"
-                                :display "block"
-                                :position "relative"
-                                :text-decoration "none"
-                                :font-family "helvetica"
-                                }
-                       ]
-                      [:.now-reading ^:prefix {:background "#FF0DFF"
-                                               :transform "scale(1.04)"
-                                               :border "solid .5px black"
-                                               :color "white"
+                    [:.baseline ^:prefix {:align-items "baseline"}]
+                    [:.start ^:prefix {:align-self "flex-start"}
+                     ]
+                    [:.title {:width "100%"
+                              :height "100%"
+                              :display "block"
+                              :position "relative"
+                              :text-decoration "none"
+                              :font-family "helvetica"
+                              }
+                     ]
+                    [:.now-reading ^:prefix {:background "#FF0DFF"
+                                             :transform "scale(1.04)"
+                                             :border "solid .5px black"
+                                             :color "white"
 
-                                               }]
+                                             }]
+                    [:.aboutus {:background "url(/aboutus.jpg)"
+                                :background-size "cover"}]
                     [:.work ^:prefix {:transform "scale(2)"}]
-                      [:.fixed {:position "fixed"}]
-                      [:body  {:background "white" :margin 0}
-                       [:.bookend (conj {:background "#5978FF" } (size "100%" "25%"))]
-                       ]
+                    [:.fixed {:position "fixed"}]
+                    [:body  {:background "white" :margin 0}
+                     [:.bookend (conj {:background "#5978FF" } (size "100%" "25%"))]
+                     ]
                     [:.iframe {:margin-bottom "6px"}]
-                      [:.overflow {:overflow-y "scroll"}]
-                      [:.test ^:prefix {:transform "translateY(5em)"}]
-                      [:.trans {:transition "all .1s ease-in-out"}]
-                      [:.font {:font-family "arial"}]
-                      [:.cuff (conj (size "" "") {:min-height "1px" :padding "1%"})]
-                      [:.hemmed {:background "#4CCCFF"}]
-                      [:.padded ^:prefix { :padding-top "7%"
-                                           :padding-bottom "7%"
+                    [:.overflow {:overflow-y "scroll"}]
+                    [:.test ^:prefix {:transform "translateY(5em)"}]
+                    [:.trans {:transition "all .1s ease-in-out"}]
+                    [:.panel {:transition "all .4s ease-in-out"}]
+                    [:.font {:font-family "arial"}]
+                    [:.cuff (conj (size "" "") {:min-height "1px" :padding "1%"})]
+                    [:.hemmed {:background "#4CCCFF"}]
+                    [:.padded ^:prefix { :padding-top "7%"
+                                         :padding-bottom "7%"
 
-                                                                          }]
+                                         }]
 
 
 
-                      ))
+                    ))

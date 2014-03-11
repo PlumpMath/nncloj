@@ -30,25 +30,42 @@
   {:id "dev"
    :source-paths ["src/cljs"]
    :compiler{
-    :output-to "resources/public/javascripts/nn.js"
-    :output-dir "resources/public/javascripts/out"
+    :output-to "resources/public/javascripts/nn/nn.js"
+    :output-dir "resources/public/javascripts/nn/out"
     :source-map true
     :optimizations :none
     }}
 
-  {:id "dmenu"
-   :source-paths ["src/cljs/menu"]
+  {:id "dvidwid"
+   :source-paths ["src/cljs/vidwid"]
    :compiler{
-    :output-to "resources/public/javascripts/menu/menu.js"
-    :output-dir "resources/public/javascripts/menu/out"
+    :output-to "resources/public/javascripts/vidwid/vidwid.js"
+    :output-dir "resources/public/javascripts/vidwid/out"
     :source-map true
     :optimizations :none
     }}
 
-  {:id "rmenu"
-            :source-paths ["src/cljs/menu"]
+  {:id "rvidwid"
+            :source-paths ["src/cljs/vidwid"]
             :compiler {
-              :output-to "resources/public/javascripts/menu/menu.js"
+              :output-to "resources/public/javascripts/vidwid/vidwid.js"
+              :optimizations :advanced
+              :pretty-print false
+              :externs ["react/externs/react.js"]}}
+
+   {:id "daboutus"
+   :source-paths ["src/cljs/aboutus"]
+   :compiler{
+    :output-to "resources/public/javascripts/aboutus/aboutus.js"
+    :output-dir "resources/public/javascripts/aboutus/out"
+    :source-map true
+    :optimizations :none
+    }}
+
+  {:id "raboutus"
+            :source-paths ["src/cljs/aboutus"]
+            :compiler {
+              :output-to "resources/public/javascripts/aboutus/aboutus.js"
               :optimizations :advanced
               :pretty-print false
               :externs ["react/externs/react.js"]}}
@@ -56,7 +73,7 @@
   {:id "release"
             :source-paths ["src/cljs"]
             :compiler {
-              :output-to "resources/public/javascripts/nn.js"
+              :output-to "resources/public/javascripts/nn/nn.js"
               :optimizations :advanced
               :pretty-print false
               :preamble ["react/react.min.js"]

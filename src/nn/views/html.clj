@@ -3,6 +3,15 @@
             [hiccup.element :as element]
    ))
 
+(defn cljs [space name]
+  (conj
+   '()
+   (element/javascript-tag (str "goog.require('" space "." name "')"))
+    (html/include-js  (str "/javascripts/" name "/" name ".js"))
+   (html/include-js (str "/javascripts/" name "/out/goog/base.js"))
+  ))
+
+
 (defn head-boiler [title css]
   [:head [:title title]
    [:meta {:name "viewport"
@@ -21,11 +30,12 @@
                                  FastClick.attach(document.body);
                                  }, false);"))
    [:body.full
-    [:div#menu.full]
-    [:div#svg]
+    #_[:div#menu.full]
+    [:div#svg.full]
 
 
     (html/include-js "http://fb.me/react-0.8.0.js")
-    (html/include-js "/javascripts/menu/out/goog/base.js")
-    (html/include-js "/javascripts/menu/menu.js")
-    (element/javascript-tag "goog.require('nn.menu')")]))
+    (cljs "nn" "nn")
+    (comment
+      (cljs "nn" "aboutus")
+      (cljs "nn" "vidwid"))]))
