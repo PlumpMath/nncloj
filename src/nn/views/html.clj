@@ -26,6 +26,7 @@
   (html/html5
    (conj (head-boiler "the new obvious" css)
          (html/include-js "//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.11/fastclick.min.js")
+         (html/include-css "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css")
          (element/javascript-tag "window.addEventListener('load', function() {
                                  FastClick.attach(document.body);
                                  }, false);"))

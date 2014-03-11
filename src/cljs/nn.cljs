@@ -64,7 +64,9 @@
                                                           }
                                                          ) }
                                     (dom/div #js {:className "item"
-                                                  :onClick #(om/update-state! owner :selected not)} (if selected "e-films" "about us"))
+                                                  :onClick #(om/update-state! owner :selected not)} (if selected "e-films " "about us ")
+
+                                             (dom/span #js {:className (if selected "fa fa-long-arrow-left" "fa fa-long-arrow-right")} nil))
 
                                     )
 
