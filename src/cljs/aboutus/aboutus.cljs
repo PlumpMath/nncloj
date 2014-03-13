@@ -28,13 +28,15 @@
    ))
 
 
+(def margin-left #js {:margin-left "10px"})
+
 (defn about-us [app owner]
   (reify
     om/IRenderState
     (render-state [_ state]
                   (dom/div #js {:className "flex full mobile"}
                            (dom/div #js {:className "aboutus-frame aboutus"} "")
-                           (dom/div nil (app :about-us))
+                           (dom/div #js {:style margin-left }  (app :about-us))
 
                            ))))
 
