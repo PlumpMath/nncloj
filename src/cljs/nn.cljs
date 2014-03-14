@@ -24,6 +24,7 @@
     om/IRenderState
     (render-state [_ {:keys [selected]}]
                   (dom/div #js {:className "full"
+                                :id "svg"
                                 :style #js {:overflow "hidden"
                                             :position "relative"
                                             :transform-style "preserve-3d"
@@ -31,13 +32,13 @@
                                             :-webkit-transform-style "preserve-3d"
                                             :-webkit-transform "translateZ(0)"}}
 
-                           (dom/div #js {:className "panel full"
+                           (dom/div #js {:className "panel full z-index"
                                          :style (clj->js (if selected
                                                            {:-webkit-transform-style "preserve-3d"
                                                             :transform-style "preserve-3d"
                                                             :position "absolute"
-                                                            :-webkit-transform "translate3d(-100%, 0, 0)"
-                                                            :transform "translate3d(-100%, 0, 0)"
+                                                            :-webkit-transform "translate3d(0, 0, 100px)"
+                                                            :transform "translate3d(0, 0, 100px)"
 
                                                             }
                                                            {:-webkit-transform-style "preserve-3d"
@@ -49,21 +50,20 @@
 
                                                             }))}
                                     (om/build vw/video-widget app))
-                           (dom/div #js {:className "panel full"
+                           (dom/div #js {:className (if selected "panel full" "panel full hide-behind" )
                                          :style (clj->js (if selected
                                                            {:-webkit-transform-style "preserve-3d"
                                                             :transform-style "preserve-3d"
-                                                            :position "absolute"
                                                             :-webkit-transform "translate3d(0, 0, 0)"
                                                             :transform "translate3d(0, 0, 0)"
 
                                                             }
                                                            {:-webkit-transform-style "preserve-3d"
                                                             :-moz-transform-style "preserve-3d"
+                                                            :z-index "-11"
 
-                                                            :position "absolute"
-                                                            :-webkit-transform "translate3d(100%, 0, 0)"
-                                                            :transform "translate3d(100%, 0, 0)"
+                                                            :-webkit-transform "translate3d(0, 0, -1000px)"
+                                                            :transform "translate3d(0, 0, -1000px)"
 
 
                                                             }))}

@@ -43,11 +43,14 @@
 
                     [:html (merge {:font-family "arial"} (size "100%"))]
                     [:.z-index {:z-index "99"}]
+                    [:.hide-behind {:z-index "-11"}]
                     [:.selected {:color "white"}]
                     [:.flex ^:prefix (flex-box "center")]
                     [:.column ^:prefix {:flex-flow "column"}]
                     [:.full (size "100%")]
-                    [:#svg ^:prefix {:perspective "1100px"
+                    [:#svg ^:prefix {:perspective "100px"
+                                     :perspective-origin "50% 50%"
+
                                      :position "relative"
                                      }]
                     [:.vid-frame (size "50%")]
