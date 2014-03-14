@@ -26,35 +26,48 @@
                   (dom/div #js {:className "full"
                                 :style #js {:overflow "hidden"
                                             :position "relative"
+                                            :transform-style "preserve-3d"
+
                                             :-webkit-transform-style "preserve-3d"
                                             :-webkit-transform "translateZ(0)"}}
 
                            (dom/div #js {:className "panel full"
                                          :style (clj->js (if selected
-                                                          {:-webkit-transform-style "preserve-3d"
-                                                               :position "absolute"
-                                                               :-webkit-transform "translate3d(-100%, 0, 0)"
-
-                                                               }
                                                            {:-webkit-transform-style "preserve-3d"
-                                                               :position "absolute"
-                                                               :-webkit-transform "translate3d(0, 0, 0)"
+                                                            :transform-style "preserve-3d"
+                                                            :position "absolute"
+                                                            :-webkit-transform "translate3d(-100%, 0, 0)"
+                                                            :transform "translate3d(-100%, 0, 0)"
 
-                                                               }))}
-                            (om/build vw/video-widget app))
+                                                            }
+                                                           {:-webkit-transform-style "preserve-3d"
+                                                            :-moz-transform-style "preserve-3d"
+
+                                                            :position "absolute"
+                                                            :-webkit-transform "translate3d(0, 0, 0)"
+                                                            :transform "translate3d(0,0,0)"
+
+                                                            }))}
+                                    (om/build vw/video-widget app))
                            (dom/div #js {:className "panel full"
-                                        :style (clj->js (if selected
-                                                          {:-webkit-transform-style "preserve-3d"
-                                                               :position "absolute"
-                                                               :-webkit-transform "translate3d(0, 0, 0)"
-
-                                                               }
+                                         :style (clj->js (if selected
                                                            {:-webkit-transform-style "preserve-3d"
-                                                               :position "absolute"
-                                                               :-webkit-transform "translate3d(100%, 0, 0)"
+                                                            :transform-style "preserve-3d"
+                                                            :position "absolute"
+                                                            :-webkit-transform "translate3d(0, 0, 0)"
+                                                            :transform "translate3d(0, 0, 0)"
 
-                                                               }))}
-                           (om/build au/about-us app))
+                                                            }
+                                                           {:-webkit-transform-style "preserve-3d"
+                                                            :-moz-transform-style "preserve-3d"
+
+                                                            :position "absolute"
+                                                            :-webkit-transform "translate3d(100%, 0, 0)"
+                                                            :transform "translate3d(100%, 0, 0)"
+
+
+                                                            }))}
+                                    (om/build au/about-us app))
                            (dom/div #js {:className (if selected
                                                       "z-index flex panel"
                                                       "z-index flex panel")

@@ -8,8 +8,7 @@
    '()
    (element/javascript-tag (str "goog.require('" space "." name "')"))
     (html/include-js  (str "/javascripts/" name "/" name ".js"))
-   (html/include-js (str "/javascripts/" name "/out/goog/base.js"))
-  ))
+   (html/include-js (str "/javascripts/" name "/out/goog/base.js"))))
 
 
 (defn head-boiler [title css]

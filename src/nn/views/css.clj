@@ -14,7 +14,7 @@
 (defn flex-box
   ([align justify flow]
     {
-     :display "-webkit-flex"
+     :display #{:flex :-webkit-flex}
      :align-items align
      :-webkit-align-items align
      :justify-content justify
@@ -22,19 +22,19 @@
      :flex-flow flow})
   ([align flow]
     {
+     :display #{:flex :-webkit-flex}
      :align-items align
      :-webkit-align-items align
-     :display "-webkit-flex"
      :justify-content align
      :-webkit-justify-content align
      :flex-flow flow})
   ([align]
    {
-     :align-items align
-     :-webkit-align-items align
-     :display "-webkit-flex"
-     :justify-content align
-     :-webkit-justify-content align
+    :display #{:flex :-webkit-flex}
+    :align-items align
+    :-webkit-align-items align
+    :justify-content align
+    :-webkit-justify-content align
     }
    ))
 
