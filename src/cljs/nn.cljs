@@ -3,21 +3,24 @@
   (:require [cljs.reader :as reader]
             [goog.events :as events]
             [goog.dom :as gdom]
-            ;;[nn.utils.input :as input]
             [cljs.core.async :as async :refer [chan put! pipe unique merge map< filter< alts! <!]]
             [nn.aboutus.aboutus :as au]
             [nn.vidwid.vidwid :as vw]
-            ;;[nn.render :as render]
-            ;;[nn.game-logic :as game]
             [om.core :as om :include-macros true]
-            [om.dom :as dom :include-macros true])
-  (:import [goog.net XhrIo]
-           goog.net.EventType
-           [goog.events EventType]
-           ))
+            [om.dom :as dom :include-macros true]))
 
 (enable-console-print!)
 (def app-state (atom {:about-us "kaitlin trataris and johann bestowrous are humans on earth." :e-films nil}))
+
+(defn translator [scale x y z deg]
+  (let [transform (str " translate3d(" x "px," y "px," z "px) "
+                             "rotate(" deg "deg) "
+                             "scale(" scale ")"
+                             ) ]
+
+    {:-webkit-transform transform
+     :transform transform
+     }))
 
 (defn main [app owner]
   (reify
@@ -28,53 +31,29 @@
                                 :style #js {:overflow "hidden"
                                             :position "relative"
                                             :transform-style "preserve-3d"
-
                                             :-webkit-transform-style "preserve-3d"
                                             :-webkit-transform "translateZ(0)"}}
 
                            (dom/div #js {:className "panel full z-index"
                                          :style (clj->js (if selected
-                                                           {:-webkit-transform-style "preserve-3d"
-                                                            :transform-style "preserve-3d"
-                                                            :position "absolute"
-                                                            :-webkit-transform "translate3d(0, 0, 100px)"
-                                                            :transform "translate3d(0, 0, 100px)"
-
-                                                            }
-                                                           {:-webkit-transform-style "preserve-3d"
-                                                            :-moz-transform-style "preserve-3d"
-
-                                                            :position "absolute"
-                                                            :-webkit-transform "translate3d(0, 0, 0)"
-                                                            :transform "translate3d(0,0,0)"
-
-                                                            }))}
+                                                           (translator 1 0 0 100 0)
+                                                           (translator 1 0 0 0 0)
+                                                           ))}
                                     (om/build vw/video-widget app))
-                           (dom/div #js {:className (if selected "panel full" "panel full hide-behind" )
+                           (dom/div #js {:className (if selected "panel full"
+                                                      "panel full hide-behind")
                                          :style (clj->js (if selected
-                                                           {:-webkit-transform-style "preserve-3d"
-                                                            :transform-style "preserve-3d"
-                                                            :-webkit-transform "translate3d(0, 0, 0)"
-                                                            :transform "translate3d(0, 0, 0)"
+                                                           (conj (translator 1 0 0 0 0)
+                                                            {:opacity 1})
+                                                           (conj (translator 1 0 0 -1000 0)
+                                                            {:opacity 0})
 
-                                                            }
-                                                           {:-webkit-transform-style "preserve-3d"
-                                                            :-moz-transform-style "preserve-3d"
-                                                            :z-index "-11"
-
-                                                            :-webkit-transform "translate3d(0, 0, -1000px)"
-                                                            :transform "translate3d(0, 0, -1000px)"
-
-
-                                                            }))}
+                                                           ))}
                                     (om/build au/about-us app))
-                           (dom/div #js {:className (if selected
-                                                      "z-index flex panel"
-                                                      "z-index flex panel")
+                           (dom/div #js {:className "z-index flex panel"
                                          :style (clj->js  {:position "absolute"
                                                            :bottom "5%"
                                                            :right "1%"
-
                                                            }
                                                           ) }
                                     (when-not selected (dom/span #js {:className "fa fa-long-arrow-right"} nil))
@@ -118,19 +97,6 @@
 
 
 
-#_(defn init
-  "Initialize the UI by initializing the user input, adapting the canvas
-  and starting the render loop."
-  []
-  (let [commands (chan)
-        notifos (game/init commands)]
-    (input/init-events! commands)
-    (render/render-loop! notifos)
-    (put! commands [:init])
-
-    ))
-
-#_(init)
 
 
 

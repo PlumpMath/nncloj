@@ -38,7 +38,7 @@
     }
    ))
 
-(def xp (garden/css {:vendors ["webkit" "moz" "o" "ms"]}
+(def xp (garden/css {:vendors ["webkit" "moz" "o" "ms" ""]}
 
 
                     [:html (merge {:font-family "arial"} (size "100%"))]
@@ -126,7 +126,13 @@
                     [:.overflow {:overflow-y "scroll"}]
                     [:.test ^:prefix {:transform "translateY(5em)"}]
                     [:.trans {:transition "all .1s ease-in-out"}]
-                    [:.panel {:transition "all .4s ease-in-out"}]
+                    [:.panel {:-webkit-transform-style "preserve-3d"
+                              :transform-style "preserve-3d"
+                              :position "absolute"
+                              :transition #{"-webkit-transform .4s ease-in-out"
+                                            "-moz-transform .4s ease-in-out"
+                                            }}]
+
                     [:.font {:font-family "arial"}]
                     [:.cuff (conj (size "" "") {:min-height "1px" :padding "1%"})]
                     [:.hemmed {:background "#4CCCFF"}]
