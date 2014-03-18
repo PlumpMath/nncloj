@@ -36,8 +36,7 @@
 
                            (dom/div #js {:className "panel full z-index"
                                          :style (clj->js (if selected
-                                                           (conj {:opacity 0}
-                                                            (translator 1 0 0 100 0))
+                                                           (translator .1 0 0 100 0)
                                                            (translator 1 0 0 0 0)
                                                            ))}
                                     (om/build vw/video-widget app))
