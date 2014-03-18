@@ -36,8 +36,8 @@
 
                            (dom/div #js {:className "panel full z-index"
                                          :style (clj->js (if selected
-                                                           (conj {:opacity 0}
-                                                            (translator .1 0 0 100 0))
+                                                           (conj {:opacity 1}
+                                                            (translator .1 0 0 1000 0))
                                                            (conj {:opacity 1}
                                                             (translator 1 0 0 0 0))
                                                            ))}
