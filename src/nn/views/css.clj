@@ -11,6 +11,22 @@
   ([size]
    {:width size :height size}))
 
+(def/defkeyframes twist
+  [:from
+      {:-webkit-transform "rotateY(360deg)"}]
+
+
+  [:to
+   {:-webkit-transform "rotateY(0deg)"}])
+
+(def/defkeyframes fade
+  [:from
+      {:opacity 0}]
+
+
+  [:to
+   {:opacity 1}])
+
 (defn flex-box
   ([align justify flow]
     {
@@ -39,8 +55,8 @@
    ))
 
 (def xp (garden/css {:vendors ["webkit" "moz" "o" "ms" ""]}
-
-
+                    twist
+                    fade
                     [:html (merge {:font-family "arial"} (size "100%"))]
                     [:.z-index {:z-index "99"}]
                     [:.hide-behind {:z-index "-11"}]
@@ -101,12 +117,13 @@
                     [:.baseline ^:prefix {:align-items "baseline"}]
                     [:.start ^:prefix {:align-self "flex-start"}
                      ]
-                    [:.title {:width "100%"
+                    [:.title ^:prefix {:width "100%"
                               :height "100%"
                               :display "block"
                               :position "relative"
                               :text-decoration "none"
                               :font-family "helvetica"
+                              :animation "fade .4s"
                               }
                      ]
                     [:.now-reading ^:prefix {:background "#FF0DFF"
@@ -140,6 +157,10 @@
                                          :padding-bottom "7%"
 
                                          }]
+
+                    [:.example-enter {:opacity ".001"}
+                           [:&.example-enter-active {:opacity 1}]
+                           ]
 
 
 
