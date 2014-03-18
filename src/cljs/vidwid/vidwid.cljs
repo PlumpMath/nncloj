@@ -159,7 +159,7 @@
     om/IRenderState
     (render-state [_ {:keys [chans hovered selected color]}]
                   (dom/div #js {:className "full flex mobile"}
-                           (apply dom/div #js {:className "vid-frame" :style #js {:background (if hovered
+                           (apply dom/div #js {:className "vid-frame trans" :style #js {:background (if hovered
                                                                                      (str "url(" hovered ")")
                                                                                      (str (or color (hsl 175 100 61))
                                                                                           " " "url(" "http://i.imgur.com/fPRkry0.png)"
